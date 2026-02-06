@@ -21,6 +21,7 @@ Mizu is designed from the ground-up to be fully cross-platform: it can run on de
   - You can put the `mizu` folder in your cloud drive (e.g., Google Drive), which can be shared across your devices
   - Or use Mizu's cloud sync which can be shared across your devices, similar to Obsidian
 - Available for desktop (Windows. macOS, Linux) and mobile (iPhone, Android) with **100% feature parity, including plugins**
+- Proudly built without AI vibecoding slop
 
 ## Philosophy
 Simpictly and clarity of use that minimizes learning curve.
