@@ -1,4 +1,4 @@
-import {CardType} from "../types/card/CardType";
+import {CardType, CardTypeMap} from "../types/card/CardType";
 import {
     CardTemplate,
     CardTemplateAny,
@@ -6,6 +6,10 @@ import {
     CardTemplateBasicReversed,
     CardTemplateCloze, CardTemplateCustom, CardTemplateImageOcclusion
 } from "../types/card/CardTemplate";
+
+export async function createCard<T extends keyof CardTypeMap>() {
+
+}
 
 async function createCard(fields: CardTemplateAny, deckName: string) {
     // todo
