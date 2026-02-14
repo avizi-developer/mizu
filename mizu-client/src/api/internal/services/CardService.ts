@@ -1,4 +1,4 @@
-import {CardType, CardTypeMap} from "../types/card/CardType";
+import {CardType, CardTypeToFieldMap} from "../types/card/CardType";
 import {
     CardTemplate,
     CardTemplateAny,
@@ -6,17 +6,26 @@ import {
     CardTemplateBasicReversed,
     CardTemplateCloze, CardTemplateCustom, CardTemplateImageOcclusion
 } from "../types/card/CardTemplate";
+import {Card} from "../types/card/Card";
 
-export async function createCard<T extends keyof CardTypeMap>() {
+import {MarkdownFieldContent} from "../types/field/FieldContent";
 
+export async function createCard<T extends keyof CardTypeToFieldMap>(
+    front: CardTypeToFieldMap[T]['front'],
+    back: CardTypeToFieldMap[T]['back']
+) {
+    // todo create card in db
+
+    return {
+        id: '', // todo
+        type: CardType,
+        front,
+        back
+    } as Card<T>;
 }
 
-async function createCard(fields: CardTemplateAny, deckName: string) {
-    // todo
-}
-
-export async function createBasicCard(fields: CardTemplateBasic, deckName: string) {
-    // todo
+export async function createBasicCard(front: MarkdownFieldContent, back: MarkdownFieldContent) {
+    return createCard<'basic'>(front, back)
 }
 
 export async function createBasicReversedCard(fields: CardTemplateBasicReversed, deckName: string) {

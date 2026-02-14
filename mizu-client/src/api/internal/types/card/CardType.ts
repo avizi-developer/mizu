@@ -1,4 +1,9 @@
-import {ClozeField, ImageOcclusionField, MarkdownField} from "../field/FieldType";
+import {
+    ClozeBackFieldContent,
+    ClozeFrontFieldContent,
+    ImageOcclusionFieldContent,
+    MarkdownFieldContent
+} from "../field/FieldContent";
 
 export const CardType = {
     BASIC: 'basic',
@@ -6,23 +11,23 @@ export const CardType = {
     IMAGE_OCCLUSION: 'imageOcclusion'
 }
 
-export interface CardTypeMap {
+export interface CardTypeToFieldMap {
     basic: {
-        front: MarkdownField;
-        back: MarkdownField;
+        front: MarkdownFieldContent;
+        back: MarkdownFieldContent;
     };
     cloze: {
-        front: ClozeField;
+        front: ClozeFrontFieldContent;
         back: {
-            text: MarkdownField;
-            extra: MarkdownField;
+            text: ClozeBackFieldContent;
+            extra: MarkdownFieldContent;
         }
     }
     imageOcclusion: {
-        front: ImageOcclusionField;
+        front: ImageOcclusionFieldContent;
         back: {
             image: Blob;
-            extra: MarkdownField;
+            extra: MarkdownFieldContent;
         }
     }
 }

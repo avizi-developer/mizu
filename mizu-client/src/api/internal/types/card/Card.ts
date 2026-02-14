@@ -1,8 +1,7 @@
-import {CardTypeMap} from "./CardType";
+import {CardTypeToFieldMap} from "./CardType";
 
-export type Card<T extends keyof CardTypeMap = keyof CardTypeMap> = {
+export type Card<T extends keyof CardTypeToFieldMap = keyof CardTypeToFieldMap> = {
     id: string;
-    type: T;
-    front: CardTypeMap[T]['front'];
-    back: CardTypeMap[T]['back']
+    front: CardTypeToFieldMap[T]['front'];
+    back: CardTypeToFieldMap[T]['back']
 }
