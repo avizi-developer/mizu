@@ -1,10 +1,23 @@
-import {BasicAndReversedCardSchema, BasicCardSchema, ClozeCardSchema, ImageOcclusionCardSchema} from "./CardSchema";
+import {
+    BasicAndReversedCardSchema,
+    BasicCardSchema,
+    ClozeCardSchema,
+    CustomCardSchema,
+    ImageOcclusionCardSchema
+} from "./CardSchema";
 
-export type CardType = 'Basic' | 'BasicAndReversed' | 'Cloze' | 'ImageOcclusion';
+export enum CardType {
+    Basic = 'Basic',
+    BasicAndReversed = 'BasicAndReversed',
+    Cloze = 'Cloze',
+    ImageOcclusion = 'ImageOcclusion',
+    Custom = 'Custom'
+}
 
 export interface CardTypeToSchemaMap {
-    Basic: BasicCardSchema,
-    BasicAndReversed: BasicAndReversedCardSchema,
-    Cloze: ClozeCardSchema,
-    ImageOcclusion: ImageOcclusionCardSchema
+    [CardType.Basic]: BasicCardSchema,
+    [CardType.BasicAndReversed]: BasicAndReversedCardSchema,
+    [CardType.Cloze]: ClozeCardSchema,
+    [CardType.ImageOcclusion]: ImageOcclusionCardSchema,
+    [CardType.Custom]: CustomCardSchema
 }
