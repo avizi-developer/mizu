@@ -11,15 +11,17 @@ export interface CardTemplate {
     id: TemplateId,
     frontHtmlTemplateHtmlString: string,
     backHtmlTemplateString: string,
+}
 
-    // todo - probably not serializable, need to load these at runtime from disk on app startup...
-    // todo - maybe consider compileAllTemplates() function with compiledTemplates map
-    frontHtmlTemplateCompiled: HandlebarsTemplateDelegate;
-    backHtmlTemplateCompiled: HandlebarsTemplateDelegate;
+interface CompiledTemplate {
+    id: TemplateId,
+    front: HandlebarsTemplateDelegate,
+    back: HandlebarsTemplateDelegate,
 }
 
 // todo will be loaded from folder
 const allCardTemplates: Map<TemplateId, CardTemplate> = new Map();
+const allCardTemplatesCompiled: Map<TemplateId, CompiledTemplate> = new Map();
 
 export function createCardTemplate(templateId: TemplateId, frontHtmlTemplateString: string, backHtmlTemplateString: string) {
     if (allCardTemplates.has(templateId)) {
@@ -28,11 +30,19 @@ export function createCardTemplate(templateId: TemplateId, frontHtmlTemplateStri
 
     const cardTemplate: CardTemplate = {
         id: templateId,
-        frontHtmlTemplateCompiled: handlebars.compile(frontHtmlTemplateString),
-        backHtmlTemplateCompiled: handlebars.compile(backHtmlTemplateString)
+        frontHtmlTemplateHtmlString: frontHtmlTemplateString,
+        backHtmlTemplateString: backHtmlTemplateString,
     };
 
     allCardTemplates.set(templateId, cardTemplate);
+    if (!allCardTemplatesCompiled.has(templateId)) {
+        allCardTemplatesCompiled.set(templateId, {
+            id: templateId,
+            front: handlebars.compile(frontHtmlTemplateString),
+            back: handlebars.compile(backHtmlTemplateString)
+        } as CompiledTemplate)
+    }
+
     return cardTemplate;
 }
 
@@ -42,6 +52,21 @@ export function getAllCardTemplates() {
 
 export function getCardTemplate(templateId: TemplateId) {
     return allCardTemplates.get(templateId);
+}
+
+export function getCardTemplateCompiled(templateId: TemplateId) {
+    const template: CardTemplate | undefined = getCardTemplate(templateId);
+
+    // If the template exists but is not yet compiled, compile and save.
+    if (template && !allCardTemplatesCompiled.has(templateId)) {
+        allCardTemplatesCompiled.set(templateId, {
+            id: templateId,
+            front: handlebars.compile(template.frontHtmlTemplateHtmlString),
+            back: handlebars.compile(template.backHtmlTemplateString)
+        } as CompiledTemplate)
+    }
+
+    return allCardTemplatesCompiled.get(templateId);
 }
 
 export function doesCardTemplateExist(templateId: TemplateId) {
@@ -58,7 +83,8 @@ export function modifyCardTemplate(templateId: TemplateId, frontHtmlTemplateStri
 }
 
 export function deleteCardTemplate(templateId: TemplateId) {
-    return allCardTemplates.delete(templateId);
+    allCardTemplates.delete(templateId);
+    allCardTemplatesCompiled.delete(templateId);
 }
 
 export function createBasicCardTemplate() {
