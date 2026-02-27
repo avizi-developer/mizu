@@ -21,4 +21,9 @@ export const basicCardBackHtmlTemplateString: string = `
 <div>{{back}}</div>
 `;
 
-export const basicCardBackTemplateCompiled = handlebars.compile(basicCardBackHtmlTemplateString)
+export const basicCardBackTemplateCompiled = handlebars.compile(basicCardBackHtmlTemplateString);
+
+export const basicCardTemplate: CardTemplate = {
+    frontHtmlTemplateCompiled: basicCardFrontTemplateCompiled,
+    backHtmlTemplateCompiled: basicCardBackTemplateCompiled,
+}

@@ -1,18 +1,31 @@
-import {BasicCardSchema, CardSchema, CustomCardSchema, HtmlRawString} from "../types/card/CardSchema";
-import {CardType, CardTypeToSchemaMap} from "../types/card/CardType";
+import {BasicCardSchema, CustomCardSchema, HtmlRawString} from "../types/card/CardSchema";
+import {Card} from "./Card";
+import {basicCardTemplate, CardTemplate} from "./CardTemplate";
+import {CardType, CardTypeToSchemaMap} from "./CardType";
 
-export async function createCard<T extends CardType>(cardType: T, fields: CardTypeToSchemaMap[T]) {
+/**
+ *
+ * @param cardType
+ * @param fields
+ * @param customCardTemplate - If the given `cardType` is `CardType.CUSTOM`, then `customCardTemplate` is required.
+ */
+export async function createCard<T extends CardType>(cardType: T, fields: CardTypeToSchemaMap[T], customCardTemplate?: CardTemplate): Promise<Card<T>> {
     if (cardType === CardType.Basic) {
-        // todo
-    }
+        return {
+            id: 'random', // todo
+            fields,
+            template: basicCardTemplate,
+            due: new Date() // todo
+        } as Card<T>;
+    } else throw new Error('[CreateCard] Invalid card type given.')
 }
 
-export async function createBasicCard(values: BasicCardSchema) {
-    return createCard<CardType.Basic>(values);
+export async function createBasicCard(fields: BasicCardSchema) {
+    return createCard(CardType.BASIC, fields);
 }
 
 export async function createBasicAndReversedCard(front: HtmlRawString, back: HtmlRawString) {
-    return createCard<CardType.BasicAndReversed>({front, back});
+    return createCard(CardType.BasicAndReversed, {front, back});
 }
 
 export async function createClozeCard(front: HtmlRawString, text: HtmlRawString, extraText: HtmlRawString) {
