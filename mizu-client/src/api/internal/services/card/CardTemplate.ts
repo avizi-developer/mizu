@@ -1,37 +1,24 @@
-import {CardSchema, CustomCardSchema, HtmlRawString} from "./CardSchema";
 import * as handlebars from "handlebars";
 
-export class CardTemplate {
-    public readonly compiledTemplate: handlebars.TemplateDelegate;
-
-    constructor(public readonly htmlTemplateString: string, public readonly cssString: string, public readonly fields: CardSchema | CustomCardSchema) {
-        this.compiledTemplate = handlebars.compile(htmlTemplateString);
-    }
-
-    public renderToHtml() {
-        const finalHtml = this.compiledTemplate(this.fields);
-        return (`
-            <style>
-                ${this.cssString}
-            </style>
-            
-            ${finalHtml}
-        `);
-    }
-
+/**
+ * The template strings are html/css/js that are compatible with handlebars,
+ * using double braces, for example {{var1}}, around variables.
+ */
+export interface CardTemplate {
+    frontHtmlTemplateCompiled: HandlebarsTemplateDelegate;
+    backHtmlTemplateCompiled: HandlebarsTemplateDelegate;
 }
 
-export const basicCardFrontTemplate: CardTemplate = `
+export const basicCardFrontHtmlTemplateString: string = `
 <div>{{front}}</div>
 `;
 
-export const basicCardFrontTemplateCompiled = handlebars.compile(basicCardFrontTemplate);
+export const basicCardFrontTemplateCompiled = handlebars.compile(basicCardFrontHtmlTemplateString);
 
-export const basicCardBackTemplate: CardTemplate = `
+export const basicCardBackHtmlTemplateString: string = `
 <div>{{front}}</div>
 <hr/>
 <div>{{back}}</div>
 `;
 
-export const basicCardBackTemplateCompiled = handlebars.compile(basicCardBackTemplate)
-
+export const basicCardBackTemplateCompiled = handlebars.compile(basicCardBackHtmlTemplateString)

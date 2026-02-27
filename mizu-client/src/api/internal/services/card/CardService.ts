@@ -1,9 +1,10 @@
 import {BasicCardSchema, CardSchema, CustomCardSchema, HtmlRawString} from "../types/card/CardSchema";
 import {CardType, CardTypeToSchemaMap} from "../types/card/CardType";
 
-export async function createCard<T extends CardType>(values: CardTypeToSchemaMap[T]) {
-    // todo create card in db
-    // todo return card
+export async function createCard<T extends CardType>(cardType: T, fields: CardTypeToSchemaMap[T]) {
+    if (cardType === CardType.Basic) {
+        // todo
+    }
 }
 
 export async function createBasicCard(values: BasicCardSchema) {

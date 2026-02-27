@@ -1,7 +1,8 @@
 import {Deck} from "../types/Deck";
 import {Card} from "../types/Card";
+import {AnyCard} from "../card/Card";
 
-export async function createDeck(name: string, cards: Card[], subDecks: Deck[]) {
+export async function createDeck(name: string, cards: AnyCard[], subDecks: Deck[]) {
     // todo
 }
 
