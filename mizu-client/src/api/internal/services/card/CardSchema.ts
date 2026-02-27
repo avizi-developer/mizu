@@ -26,9 +26,10 @@ export interface ClozeCardSchema extends CardSchema {
     }
 }
 
+// todo
 export interface ImageOcclusionCardSchema extends CardSchema {
     front: HtmlRawString;
     back: HtmlRawString;
 }
 
-export type CustomCardSchema = Record<string, unknown>;
+export type CustomCardSchema = Record<string, string>;
