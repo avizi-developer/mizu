@@ -33,7 +33,7 @@ export async function loadCollection(): Promise<Collection>{
 export async function saveDeck(deck: Deck) {
     const DECK_DIR = path.join(DECKS_DIR, deck.id);
     if (!doesDirExist(DECK_DIR)) {
-        await
+        // todo
     }
 }
 
